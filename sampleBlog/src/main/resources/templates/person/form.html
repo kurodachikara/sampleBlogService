@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link rel="stylesheet" href="/css/makeblog.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script><title>プロフィール編集</title>
+<style>
+label>input{
+display:none; /*アップロードボタンの初期スタイルを無効化*/
+}
+label{
+	color: #AAAAAA; /* ラベルテキストの色を指定する */
+font-size: 13px; /* ラベルテキストのサイズを指定する */
+background-color: #006DD9;/* ラベルの背景色を指定する */
+padding: 6px; /* ラベルとテキスト間の余白を指定する */
+border-radius: 10px; /* ラベルボックスの角丸を指定する */
+cursor:pointer; /* マウスカーソルの形を指定する */}
+label:hover{
+	color: #0090aa;
+}
+</style>
+</head>
+<body>
+<p>
+	<a class="return" href="/person/index">一覧に戻る</a>
+</p>
+<form th:object="${userAccount}" method="get">
+	<a th:href="@{|/person/*{username}/editPass|}">パスワード編集</a>
+</form>
+
+<form th:action="@{/person/edit}" th:object="${person}" method="post" enctype="multipart/form-data">
+	<!-- アイコン未設定時 -->
+	<span th:if="${person.icon_base64_str eq null}">  
+		アイコン設定
+		<label for="file_upload">
+			ファイルを選択してください
+			<input type="file" th:field="*{icon_file}" id="file_upload" onchange="$('#fake_text_box').val($(this).val())">
+			<input type="text" id="file_upload" value="ファイル選択" onClick="$('#file_upload').click();"><br>
+		</label>
+		<input type="text" id="fake_text_box" value="" size="35" readonly onClick="$('#file_upload').click();">
+	</span>
+	
+	<!-- アイコン設定時 -->
+	<span th:if="${person.icon_base64_str !=null}">  
+	<img th:src="${base64icon}" style="width:100px; height:100px;-moz-border-radius: 50px;
+	-webkit-border-radius: 25px;border-radius: 50px;"><br>
+	アイコン編集<label for="file_upload">
+		ファイルを選択してください
+		<input type="file" th:field="*{icon_file}" id="file_upload" onchange="$('#fake_text_box').val($(this).val())">
+		<input type="text" id="file_upload" value="ファイル選択" onClick="$('#file').click();"><br>
+	</label>
+	<input type="text" id="fake_text_box" value="" size="100" readonly onClick="$('#file').click();">
+	</span>
+	
+	<div>
+		名前<br>
+		<input type="text" th:field="*{name}">
+		<span th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span>
+		
+	</div>
+	<div>
+		誕生日<br>
+		<input type="date" th:field="*{birthday}">
+		<span th:if="${#fields.hasErrors('birthday')}" th:errors="*{birthday}"></span>
+	</div>
+	<div>
+		趣味・特技<br>
+		<input type="text" th:field="*{hobby}">
+		<span th:if="${#fields.hasErrors('hobby')}" th:errors="*{hobby}"></span>
+	</div>
+	<div>
+		職業<br>
+		<input type="text" th:field="*{work}">
+		<span th:if="${#fields.hasErrors('work')}" th:errors="*{work}"></span>
+	</div>
+	<div>
+			<ul>
+				<li th:each="blog:${person.blogs}" th:object="${blog}">
+				<span th:text="*{title}"></span><br>
+				<span th:text="*{contents}"></span>
+					<a th:href="@{|/person/blog/*{id}/edit|}">編集</a>
+				</li>
+			</ul>
+	</div>
+	<div>
+		<input type="submit" value="編集">
+	</div>
+</form>
+</body>
+</html>

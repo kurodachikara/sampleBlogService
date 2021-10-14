@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link rel="stylesheet" href="/css/makeblog.css">
+<title>新規アカウント登録</title>
+</head>
+<body>
+<div id="login" class="big-bg">
+<form th:action="@{/createAccount}" method="post" th:object="${userAccountForm}">
+<div class="login-contents">
+	<p>ユーザーIDとパスワードを入力し、アカウント登録を完了してください。</p>
+	<div class="name">
+		ユーザー名：<input type="text" th:field="*{username}">
+		<span th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></span>
+	</div>
+	<div class="pass">
+		パスワード：<input type="text" th:field="*{password}"><br>
+		パスワード（確認用）:<input type="text" name="passwordConfirm"><br>
+		<span th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></span>
+	</div>
+	<div>
+		<button type="submit" value="登録">登録</button>
+	</div>
+	</div>
+</form>
+</div>
+</body>
+</html>

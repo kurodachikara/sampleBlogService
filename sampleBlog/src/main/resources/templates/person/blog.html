@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link rel="stylesheet" href="/css/makeblog.css">
+<title th:text="${blog.title}">ブログタイトル</title>
+</head>
+<body>
+<p>
+	<a href="/person/index">一覧に戻る</a>
+</p>
+<div class="create-blog" th:object="${blog}">
+	<h1 class="blog-title" th:text="*{title}"></h1>
+	<div class="posted_text">
+		<th:block th:each="line:*{contents.split('\n')}">
+			<th:block th:text="${line}"></th:block>
+		</th:block>
+	</div>
+	<img th:src="${base64image}">
+	<div class="post-date">
+		投稿日時<br>
+		<span th:text="*{postDateTime}">投稿日時</span>
+	</div>
+	<form th:action="@{|/person/comment/blog/*{blog.id}|}" method="post" th:object="${comment}">
+		コメントする<br>
+		<input type="hidden" name="blog" th:value="*{blog.id}">
+		<input type="hidden" name="person" th:value="*{person.id}">
+		<textarea rows="5" cols="60" th:field="*{commenting}"></textarea>
+		<input type="submit">
+	</form>
+	<table class="comment" border="1">
+		<tr>
+			<th>id</th>
+			<th>コメント</th>
+			<th>投稿日時</th>
+			<th>名前</th>
+			<th></th>
+		</tr>
+		<tr th:each="c:*{comments}" th:object="${c}">
+			<td><span th:text="*{id}"></span></td>
+			<td><span th:text="*{commenting}"></span></td>
+			<td><span th:text="*{postDateTime}"></span></td>
+			<td><span th:text="*{person.name}"></span>
+			<td><span th:if="${person.id==c.person.id}">
+				<a th:href="@{|/person/comment/${c.id}/delete|}">
+					<input type="hidden" name="blog" th:value="*{blog.id}">
+					<input type="hidden" name="person" th:value="*{person.id}">
+				削除</a>
+			</span></td>
+		</tr>
+	</table>
+</div>
+</body>
+</html>

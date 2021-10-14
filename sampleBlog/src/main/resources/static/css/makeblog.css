@@ -1,0 +1,344 @@
+@charset "UTF-8";
+html{
+	font-size: 100%;
+	height: 100%;
+}
+
+/*ログインID*/
+.loginid{
+	text-align: right;
+	color: #fff;
+	font-size: 1.25rem;
+	margin-right: 12px;
+}
+.error{
+	padding: 10px;
+}
+/* 共通部分 */
+.page-header{
+	display: flex;
+	justify-content: space-between;
+}
+.wrapper{
+	max-width: 1100px;
+	margin: auto;
+}
+.grid{
+	display: grid;
+	gap: 10%;
+	grid-template-columns: repeat(auto-fit,minmax(240px,1fr));
+	margin-top: 1%;
+	margin-bottom: 250px;
+}
+.main-nav{
+	display: flex;
+	font-size: 120%;
+	text-transform: uppercase;
+	margin-top: 34px;
+	list-style: none;
+}
+.main-nav li{
+	margin-left: 36px;
+	background: #62420e;
+	border-radius: 5px;
+	padding: 18px 32px;
+}
+.main-nav a{
+	color: #fff;
+}
+.main-nav a:hover{
+	color: #0000ff;
+}
+
+body{
+	font-family: Times, Times New Roman, Georgia, serif;
+	line-height: 1.7;
+	height: 100%;
+	color: #432
+}
+a{
+	text-decoration: none;
+}
+a:hover{
+	color: #0090aa;
+}
+h1{
+	font-size: 3.5rem;
+}
+button{
+	min-width: 100px;
+  	font-family: inherit;
+  	appearance: none;
+  	border: 0;
+  	border-radius: 5px;
+  	background: #62420e;
+  	color: #fff;
+  	padding: 8px 16px;
+  	font-size: 1rem;
+  	cursor: pointer;
+}
+button:hover{
+	background: #1d49aa;
+}
+button:focus {
+  outline: none;
+  box-shadow: 0 0 0 4px #cbd6ee;
+}
+input[type="text"],
+textarea{
+	border: 1px solid;
+	border-radius: 5px;
+	padding: 10px;
+	font-size: 1rem;
+}
+input[type="submit"]{
+	display       : inline-block;
+  	border-radius : 5%;          /* 角丸       */
+  	font-size     : 18pt;        /* 文字サイズ */
+  	text-align    : center;      /* 文字位置   */
+  	cursor        : pointer;     /* カーソル   */
+  	padding       : 12px 12px;   /* 余白       */
+  	background    : #999999;     /* 背景色     */
+  	color         : rgba(127, 70, 0, 0.90);     /* 文字色     */
+  	line-height   : 1em;         /* 1行の高さ  */
+  	transition    : .3s;         /* なめらか変化 */
+  	box-shadow    : 6px 6px 3px #666666;  /* 影の設定 */
+  	border        : 2px solid #999999;    /* 枠の指定 */
+  	margin-top: 20px;
+}
+input[type="submit"]:hover{
+	box-shadow    : none;        /* カーソル時の影消去 */
+  	color         : #999999;     /* 背景色     */
+  	background    : rgba(127, 70, 0, 0.90);     /* 文字色     */
+}
+.return{
+	font-size: 1.25rem;
+	padding: 20px;
+	text-align: right;
+	background-color: #62420e;
+	color: #fff;
+}
+
+/*記事検索機能*/
+.search{
+	margin: 3%;
+	text-align: left;
+	margin-left: 15%;
+}
+.searchText{
+	margin: auto 2%;
+}
+
+/*作成・編集機能*/
+.container{
+	display: flex;
+	justify-content: flex-end;
+	flex-wrap: wrap;
+	background-color:#62420e;
+}
+.container-log{
+	display: flex;
+	justify-content: space-between;
+	flex-wrap: wrap;
+	background-color:#62420e;
+}
+.container-log a{
+	color: #fff;
+}
+
+.tag{
+	font-size: 1.25rem;
+	margin-left: 12px;
+	color: #fff;
+}
+
+/*　投稿日時 */
+.post-date{
+	font-size: 0.75rem;
+	margin-left: 24px;
+	text-align: right;
+}
+
+/*　投稿内容　*/
+.text-contents{
+	display: block;
+	padding: 5px;
+	width: auto;
+  	white-space: nowrap;
+  	text-overflow: ellipsis;
+  	overflow: hidden;
+}
+.icon img{
+	height: 40px;
+	width: 40px;
+	-moz-border-radius: 25px;
+	-webkit-border-radius: 25px;
+	border-radius: 25px;	/* 横幅&高さの1/2 */
+}
+.userinfo{
+	display: flex;
+	position: relative;
+}
+.username{
+	padding: 10px;
+	color: #000000;
+}
+.username:hover{
+	color: #0090aa;
+}
+
+.index{
+	border-style: groove;
+}
+
+/*トップ画面の投稿画像*/
+.post-image{
+	width: 60%;
+	height: 60%;
+}
+.delete-blog{
+	color: #808080;
+	font-size: 0.8rem;
+	margin-left: 10px;
+}
+
+/*ログイン時*/
+.login-contents{
+	text-align: center;
+	color: #fff;
+	font-size: 1.5rem;
+}
+.name{
+	padding: 5%;
+}
+.pass{
+	margin-bottom: 4%;
+}
+
+.big-bg{
+	background-repeat: no-repeat;
+	background-size: cover;
+	background-position: centor top;
+}
+
+/* ブログページ */
+
+.create-blog{
+	text-align: center;
+	padding: 20px;
+}
+.title{
+	margin-bottom: 20px;
+}
+
+.posted_text{
+	font-size: 1.25rem;
+	border-style: inset;
+	padding: 1%;
+	width: 800px;
+	height: auto;
+	margin: 0 auto;
+}
+.comment{
+	margin: 0 auto;
+}
+.img-text{
+	margin-top: 20px;
+}
+.choice-img{
+	margin-left: 10px;
+}
+.contents{
+	padding: 20px;
+}
+/*　ブログタイトル　*/
+.blog-title{
+	font-family: "Yu Gothic Medium","游ゴシック Medium",YuGothic,"游ゴシック体","ヒラギノ角ゴ Pro W3",sans-serif;
+	font-weight: bold;
+	font-size: 1.5rem;
+	line-height: 1.5;
+}
+
+/* プロフィールページ */
+.profile-container{
+	border-color: rgba(128,0,0,.5);
+	border-bottom: dashed;
+	padding: 1.25rem;
+}
+.item{
+	border-bottom: solid;
+	border-color: tomato;
+	padding: 1%;
+}
+.item-text{
+	border-bottom: solid;
+	border-color: #d9d6d2;
+	padding: 1%;
+}
+.pro-icon{
+	display: flex;
+	font-size: 2rem;
+}
+.pro-icon img{
+	height: 100px;
+	width: 100px;
+	-moz-border-radius: 50px;
+	-webkit-border-radius: 50px;
+	border-radius: 50px;
+	
+}
+
+#home{
+	background-image: url(/images/harinezumiandpc.jpg);
+	height: 200px;
+	background-repeat: no-repeat;
+	background-size: cover;
+	background-position: centor top;
+}
+#login{
+	background-image: url(/images/macbook2000_TP_V.jpg);
+	min-height: 100vh;
+}
+
+element.style{
+	height: 66.625px;
+	width: 100px;
+	-moz-border-radius: 25px;
+	-webkit-border-radius: 25px;
+	border-radius: 25px;	/* 横幅&高さの1/2 */
+}
+
+/* メディアクエリー*/
+@media(max-width: 800px){
+	.page-header{
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+	}
+	h1{
+		font-size: 2.5rem;
+	}
+	.main-nav{
+		font-size: 1rem;
+		text-transform: uppercase;
+		margin-top: 15px;
+		list-style: none;
+	}
+	.main-nav li{
+		margin-left: 18px;
+		background: #62420e;
+		border-radius: 5px;
+		padding: 9px 16px;
+	}
+	.wrapper{
+		max-width: 1100px;
+		margin: auto;
+	}
+	.grid{
+		display: grid;
+		gap: 5%;
+		grid-template-columns: repeat(auto-fit,minmax(240px,1fr));
+		margin-top: 1%;
+		margin-bottom: 250px;
+}
+}

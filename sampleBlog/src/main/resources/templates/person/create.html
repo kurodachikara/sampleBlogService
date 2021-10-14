@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org/"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link rel="stylesheet" href="/css/makeblog.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<title>新規ブログ作成</title>
+<style>
+label>input{
+display:none; /*アップロードボタンの初期スタイルを無効化*/
+}
+label{
+	color: #fff; /* ラベルテキストの色を指定する */
+font-size: 13px; /* ラベルテキストのサイズを指定する */
+background-color: #006DD9;/* ラベルの背景色を指定する */
+padding: 6px; /* ラベルとテキスト間の余白を指定する */
+border-radius: 10px; /* ラベルボックスの角丸を指定する */
+cursor:pointer; /* マウスカーソルの形を指定する */}
+label:hover{
+	background-color: #000000;
+}
+</style>
+</head>
+<body>
+<a class="return" href="/person/index">ホームに戻る</a>
+	<form th:action="@{''}" method="post" th:object="${blog}" enctype="multipart/form-data">
+		<input type="hidden" th:field="*{id}">
+		<input type="hidden" th:field="*{person.id}">
+	<div class="create-blog">
+		<div class="blog-title">
+			タイトル<br>
+			<input type="text" th:field="*{title}">
+			<span th:if="${#fields.hasErrors('title')}" th:errors="*{title}"></span>
+		</div>
+		<div class="contents">
+			投稿内容<br>
+			<textarea cols="100" rows="10" th:field="*{contents}"></textarea>
+			<span th:if="${#fields.hasErrors('contents')}" th:errors="*{contents}"></span>
+		</div>
+		<span><img th:src="${base64image}"></span>
+		<span th:if="${base64image !=null}"><a th:href="@{|/person/blog/*{id}/deleteimage|}">画像削除</a></span>
+		
+		<div>			
+			画像投稿<label class="choice-img" for="file_upload">
+				ファイルを選択してください
+				<input type="file" th:field="*{file}" id="file_upload" onchange="$('#fake_text_box').val($(this).val())">
+				<input type="text" id="file_upload" value="ファイル選択" onclick="$('#file').click();"><br>
+			</label>
+			<input class="img-text" type="text" id="fake_text_box" value="" size="100" readonly onClick="$('#file').click();">
+		</div>
+		
+		<table class="comment" border="1">
+		<tr>
+			<th>id</th>
+			<th>コメント</th>
+			<th>投稿日時</th>
+			<th>名前</th>
+			<th></th>
+		</tr>
+		<tr th:each="c:*{comments}" th:object="${c}">
+			<td><span th:text="*{id}"></span></td>
+			<td><span th:text="*{commenting}"></span></td>
+			<td><span th:text="*{postDateTime}"></span></td>
+			<td><span th:text="*{person.name}"></span>
+			<td><span th:if="${person.id==c.person.id}">
+				<a th:href="@{|/person/comment/${c.id}/delete|}">
+					<input type="hidden" name="blog" th:value="*{blog.id}">
+					<input type="hidden" name="person" th:value="*{person.id}">
+				削除</a>
+			</span></td>
+		</tr>
+	</table>
+	<div>
+			<input type="submit" value="投稿">
+		</div>
+	</div>
+	</form>
+</body>
+</html>

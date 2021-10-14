@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org/"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      layout:decorate="~{layout/common}">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link rel="stylesheet" href="/css/makeblog.css">
+<title>ブログ一覧</title>
+</head>
+<body>
+<div layout:fragment="content">
+	<p class="container-log">		
+		<span sec:authorize="isAuthenticated()"><a href="/person/index">一覧に戻る</a></span>
+		<span sec:authorize="!isAuthenticated()"><a href="/">一覧に戻る</a></span>
+	</p>
+<div th:object="${person}">
+	<div class="pro-icon">
+		<img th:src="*{icon_base64_str}">
+		<p th:text="*{name}"></p>
+	</div>
+	<ul class="profile-container">
+		<li class="item">
+			＜誕生日＞<br>
+			<span th:text="*{birthday}"></span>
+		</li>
+		<li class="item">
+			＜趣味・特技＞<br>
+			<span th:text="*{hobby}"></span>
+		</li>
+		<li class="item">
+			＜職業＞<br>
+			<span th:text="*{work}"></span>
+		</li>
+	</ul>
+</div>
+	<div>
+		投稿記事
+		<ul sec:authorize="!isAuthenticated()">
+			<li class="item-text" th:each="blog:${person.blogs}" th:object="${blog}">
+			<a th:href="@{|/blog/*{id}|}"><span th:text="*{title}"></span></a><br>
+			<span th:text="*{contents}"></span>
+			</li>
+		</ul>
+		<ul sec:authorize="isAuthenticated()">
+			<li class="item-text" th:each="blog:${person.blogs}" th:object="${blog}">
+			<a th:href="@{|/person/blog/*{id}|}"><span th:text="*{title}"></span></a><br>
+			<span th:text="*{contents}"></span>
+			</li>
+		</ul>
+	</div>
+</div>
+</body>
+</html>

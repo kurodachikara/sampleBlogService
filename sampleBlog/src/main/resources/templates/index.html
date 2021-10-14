@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org/"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/common}">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link rel="stylesheet" href="/css/makeblog.css">
+<title>ブログ一覧</title>
+</head>
+<body>
+<div layout:fragment="content">
+<form class="search" action="/search" method="get">
+	タイトル検索
+	<input class="searchText" type="text" name="word" th:value="${param.word}">
+	<input type="submit" value="表示">
+</form>
+<main>
+<ul class="wrapper grid">
+	<li class="item" th:each="blog:${blogs}" th:object="${blog}">
+		<div class="userinfo">
+			<span class="icon" th:if="${blog.person.icon_base64_str !=null}">
+				<!-- アイコン画像 -->
+				<img th:src="${blog.person.icon_base64_str}">
+				</span>
+			<a th:href="@{|/profile/*{person.id}|}"><span class="username" th:text="*{person.name}"></span></a>
+		</div>
+		<a class="blog-title" th:href="@{|/blog/*{id}|}" th:text="*{title}">タイトル</a>
+		<div class="index">
+			<span class="text-contents" th:text="*{contents}"></span><br>
+			<span th:if="${blog.base64_str != null}">
+				<img class="post-image" th:src="*{base64_str}">
+			</span>
+			<div class="post-date">
+				投稿日時 : <span th:text="*{postDateTime}">投稿日時</span>
+			</div>
+		</div>
+	</li>
+</ul>
+</main>
+</div>
+</body>
+</html>

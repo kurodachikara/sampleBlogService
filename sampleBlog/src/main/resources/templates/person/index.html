@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org/"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      layout:decorate="~{layout/common}">
+<head>
+<meta charset="UTF-8">
+<title>ブログ一覧</title>
+</head>
+<body>
+<div layout:fragment="content">
+	<div class="container">
+		<div>
+			<a class="tag" href="/person/create">新規ブログ作成</a>
+		</div>
+		<div>
+			<a class="tag" href="/person/edit">プロフィール編集</a>
+		</div>
+	</div>
+	<form class="search" action="/person/search" method="get">
+		記事検索
+		<input class="searchText" type="text" name="word" th:value="${param.word}">
+		<input type="submit" value="表示">
+	</form>
+	<ul class="wrapper grid">
+		<li th:each="blog:${blogs}" th:object="${blog}">
+			<div class="userinfo">
+				<span class="icon" th:if="${blog.person.icon_base64_str !=null}">
+					<!-- アイコン画像 -->
+					<img th:src="${blog.person.icon_base64_str}">
+				</span>
+			<a th:href="@{|/profile/*{person.id}|}"><span class="username" th:text="*{person.name}"></span></a>
+			</div>
+			
+			<a class="blog-title" th:href="@{|/person/blog/*{id}|}" th:text="*{title}">タイトル</a>
+			<span th:if="${person.id==blog.person.id}">
+				<a class="delete-blog" th:href="@{|/person/blog/*{id}/delete|}">
+				<input type="hidden" name="blog" th:value="*{id}">
+				<input type="hidden" name="person" th:value="*{person.id}">
+				削除</a>
+			</span>
+			<br>
+			<div class="index">
+				<span class="text-contents" th:text="*{contents}"></span><br>
+				<span th:if="${blog.base64_str != null}"><img class="post-image" th:src="*{base64_str}"></span>
+				<div class="post-date">
+					投稿日時 : <span th:text="*{postDateTime}">投稿日時</span>
+				</div>
+			</div>
+		</li>
+	</ul>
+	
+</div>
+</body>
+</html>

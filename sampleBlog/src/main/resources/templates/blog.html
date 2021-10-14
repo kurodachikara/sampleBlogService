@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link rel="stylesheet" href="/css/makeblog.css">
+<title th:text="${blog.title}">ブログタイトル</title>
+</head>
+<body>
+<p class="container-log">
+	<a href="/">一覧に戻る</a>
+</p>
+<div th:object="${blog}">
+	<h1 th:text="*{title}"></h1>
+	<p class="posted_text">
+		<th:block th:each="line:*{contents.split('\n')}">
+			<th:block th:text="${line}"></th:block>
+		</th:block>
+	</p>
+	<img th:src="${base64image}">
+	<div class="post-date">
+		投稿日時<br>
+		<span th:text="*{postDateTime}">投稿日時</span>
+	</div>
+	<table border="1">
+		<tr>
+			<th>id</th>
+			<th>コメント</th>
+			<th>投稿日時</th>
+			<th>名前</th>
+		</tr>
+		<tr th:each="comment:*{comments}" th:object="${comment}">
+			<td><span th:text="*{id}"></span></td>
+			<td><span th:text="*{commenting}"></span></td>
+			<td><span th:text="*{postDateTime}"></span></td>
+			<td><span th:text="*{person.name}"></span></td>
+		</tr>
+	</table>
+</div>
+</body>
+</html>

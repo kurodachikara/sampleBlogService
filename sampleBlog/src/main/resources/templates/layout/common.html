@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org/"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link rel="stylesheet" href="/css/makeblog.css">
+
+<title>共通レイアウト</title>
+</head>
+<body>
+<div id="home" class="big-bg">
+<div class="page-header wrapper">
+	<h1>Javaログ</h1>
+	<nav>
+		<div class="container-log">
+			<span class="loginid" sec:authorize="isAuthenticated()">
+				ログインID：<span sec:authentication="name"></span>
+			</span>
+			<div class="logout" sec:authorize="isAuthenticated()">
+				<form th:action="@{/logout}" method="post">
+					<button type="submit" value="ログアウト">ログアウト</button>
+				</form>
+			</div>
+		</div>
+		<ul class="main-nav">
+			<li sec:authorize="!isAuthenticated()"><a href="/login">ログイン</a></li>
+			<li sec:authorize="!isAuthenticated()"><a href="/createAccount">新規アカウント登録</a></li>
+			
+		</ul>
+	</nav>
+</div>
+</div>
+<div class="content" layout:fragment="content">
+</div>
+</body>
+</html>

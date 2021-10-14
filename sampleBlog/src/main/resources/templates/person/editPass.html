@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link rel="stylesheet" href="/css/makeblog.css">
+<title>パスワード変更</title>
+</head>
+<body>
+<p>
+	<a class="return" href="/person/index">一覧に戻る</a>
+</p>
+<form th:action="@{|/person/*{username}/editPass|}" th:object="${userAccountForm}" method="post">
+	<div>
+		ユーザーID：
+		<span th:text="*{username}"></span>
+	</div>
+	<div>
+		パスワード：
+		<input type="password" th:field="*{password}" ><br>
+		パスワード（確認用）：
+		<input type="password" name="passwordConfirm">
+		<span th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></span>
+	</div>
+	<div>
+		<button type="submit" value="変更">変更</button>
+	</div>
+</form>
+</body>
+</html>
