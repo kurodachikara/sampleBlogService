@@ -4,7 +4,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.when;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.multipart;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.header;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
@@ -167,13 +169,14 @@ public class PersonControllerTest {
 	@WithMockUser(roles="USER")
 	public void testEditProfilePostSucccess() throws Exception{
 		MultiValueMap<String, String> params=new LinkedMultiValueMap<>();
+		MockMultipartFile multipartFile=new MockMultipartFile("file","test.txt","text/plain","Spring Framework".getBytes());
 		params.add("name", "タイシ");
 		params.add("birthday", "1990-1-1");
 		params.add("hobby", "バレーボール");
 		params.add("work", "飲食店");
-		params.add("icon_file", "picture.jpg");
 		mockMvc.perform(post("/person/edit").with(csrf()).params(params))
 				.andExpect(status().isOk());
+		this.mockMvc.perform(multipart("/").file(multipartFile)).andExpect(header().string("Location", "/"));
 	}
 	@Test
 	@WithMockUser(roles="USER")
