@@ -47,6 +47,7 @@ public class PersonControllerTest {
 	@Autowired
 	private MockMvc mockMvc;
 	
+
 	@MockBean
 	private PersonService personService;
 	@MockBean
@@ -169,14 +170,13 @@ public class PersonControllerTest {
 	@WithMockUser(roles="USER")
 	public void testEditProfilePostSucccess() throws Exception{
 		MultiValueMap<String, String> params=new LinkedMultiValueMap<>();
-		MockMultipartFile multipartFile=new MockMultipartFile("file","test.txt","text/plain","Spring Framework".getBytes());
+		MockMultipartFile multipartFile=new MockMultipartFile("icon_file","test.txt","text/plain","Spring Framework".getBytes());
 		params.add("name", "タイシ");
-		params.add("birthday", "1990-1-1");
+		params.add("birthday", "1990-12-12");
 		params.add("hobby", "バレーボール");
 		params.add("work", "飲食店");
-		mockMvc.perform(post("/person/edit").with(csrf()).params(params))
-				.andExpect(status().isOk());
-		this.mockMvc.perform(multipart("/").file(multipartFile)).andExpect(header().string("Location", "/"));
+		mockMvc.perform(multipart("/person/edit").file(multipartFile).with(csrf()).params(params))
+				.andExpect(status().isFound());
 	}
 	@Test
 	@WithMockUser(roles="USER")
@@ -189,15 +189,16 @@ public class PersonControllerTest {
 	@WithMockUser(roles="USER")
 	public void testCreateBlogPostSuccess() throws Exception{
 		MultiValueMap<String, String> params=new LinkedMultiValueMap<>();
+		MockMultipartFile file=new MockMultipartFile("file", "test.txt", "text/plain", "Spring Framework".getBytes());
 		params.add("title", "Spring");
-		params.add("contetns", "a");
-		mockMvc.perform(post("/person/create").with(csrf()).params(params))
-				.andExpect(status().isOk());
+		params.add("contents", "a");
+		mockMvc.perform(multipart("/person/create").file(file).with(csrf()).params(params))
+				.andExpect(status().isFound());
 	}
 	
 	@Test
 	@WithMockUser(roles="USER")
-	public void testEditBlog() throws Exception{
+	public void testEditBlogGet() throws Exception{
 		mockMvc.perform(get("/person/blog/1/edit"))
 				.andExpect(status().isOk())
 				.andExpect(view().name("person/create"))
@@ -216,11 +217,11 @@ public class PersonControllerTest {
 	@WithMockUser(roles="USER")
 	public void testEditBlogPostSuccess() throws Exception{
 		MultiValueMap<String,String> params=new LinkedMultiValueMap<>();
+		MockMultipartFile file=new MockMultipartFile("file", "test.txt","text/plain","Spring Framework".getBytes());
 		params.add("title", "Java");
 		params.add("contents", "aaa");
-		params.add("file", "picture.jpg");
-		mockMvc.perform(post("/person/blog/1/edit").with(csrf()).params(params))
-				.andExpect(status().isOk());
+		mockMvc.perform(multipart("/person/blog/1/edit").file(file).with(csrf()).params(params))
+				.andExpect(status().isFound());
 	}
 	@Test
 	@WithMockUser(roles="USER")
