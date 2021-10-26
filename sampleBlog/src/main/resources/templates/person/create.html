@@ -46,7 +46,7 @@ label:hover{
 		<div>			
 			画像投稿<label class="choice-img" for="file_upload">
 				ファイルを選択してください
-				<input type="file" th:field="*{file}" id="file_upload" onchange="$('#fake_text_box').val($(this).val())">
+				<input type="file" name="mfiles" multiple="multiple" id="file_upload" onchange="$('#fake_text_box').val($(this).val())">
 				<input type="text" id="file_upload" value="ファイル選択" onclick="$('#file').click();"><br>
 			</label>
 			<input class="img-text" type="text" id="fake_text_box" value="" size="100" readonly onClick="$('#file').click();">

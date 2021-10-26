@@ -25,11 +25,13 @@ import org.springframework.web.multipart.MultipartFile;
 
 import jp.kuroda.sampleBlog.model.Blog;
 import jp.kuroda.sampleBlog.model.Comment;
+import jp.kuroda.sampleBlog.model.FileEntity;
 import jp.kuroda.sampleBlog.model.Person;
 import jp.kuroda.sampleBlog.model.UserAccount;
 import jp.kuroda.sampleBlog.model.UserAccountForm;
 import jp.kuroda.sampleBlog.service.BlogService;
 import jp.kuroda.sampleBlog.service.PersonService;
+import jp.kuroda.sampleBlog.service.UploadFileService;
 import jp.kuroda.sampleBlog.service.UserService;
 import jp.kuroda.sampleBlog.service.CommentService;
 
@@ -44,6 +46,8 @@ public class PersonController {
 	private CommentService commentService;
 	@Autowired
 	private UserService userService;
+	@Autowired
+	private UploadFileService fileService;
 
 	
 	@ModelAttribute("person")
@@ -97,32 +101,24 @@ public class PersonController {
 	//ブログ投稿
 	@GetMapping("/create")
 	public String createBlog(Blog blog,Person person) {
+		
 		blog.setPerson(person);
 		return"person/create";
 	}
 	@PostMapping("/create")
-	public String createBlog(@Valid Blog blog,BindingResult bindingResult) {
+	public String createBlog(@RequestParam("mfiles")List<MultipartFile> mfiles,@Valid Blog blog,BindingResult bindingResult) {
 		if(bindingResult.hasErrors()) {
 			return "person/create";
 		}
-		if(!blog.getFile().isEmpty()) {
-			try {
-				MultipartFile file=blog.getFile();
-				StringBuffer data = new StringBuffer();
-			    String base64 = new String(Base64.encodeBase64(file.getBytes()),"ASCII"); //画像をbase64に置き換えて文字列化
-			    data.append("data:image/jpeg;base64,");
-			    data.append(base64);
-			    blog.setBase64_str(data.toString());
-			}catch(Exception e) {
-			}
-		}
+		fileService.saveFile(mfiles, blog);
 		blogService.createBlog(blog);
 		return"redirect:/person/blog/"+blog.getId();
 	}
 	//ブログ閲覧
 	@GetMapping("/blog/{blogId}")
-	public String showBlog(@PathVariable("blogId") Blog blog,Person person,Model model){
-	    model.addAttribute("base64image",blog.getBase64_str());
+	public String showBlog(@PathVariable("blogId") Blog blog,Person person,FileEntity fileEntity,Model model){
+	    List<FileEntity> fileEntities=blog.getFileEntities();
+		model.addAttribute("fileEntities",fileEntities);
 		model.addAttribute("blog",blog);
 		Comment comment=commentService.getComment(blog,person);
 		model.addAttribute("comment",comment);

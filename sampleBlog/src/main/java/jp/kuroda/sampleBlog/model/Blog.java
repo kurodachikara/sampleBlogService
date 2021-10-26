@@ -56,4 +56,6 @@ public class Blog implements Serializable{
 	private Person person;
 	@OneToMany(mappedBy="blog",cascade=CascadeType.ALL)
 	private List<Comment> comments;
+	@OneToMany(mappedBy="blog")
+	private List<FileEntity> fileEntities;
 }

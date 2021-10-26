@@ -17,6 +17,9 @@
 			<th:block th:text="${line}"></th:block>
 		</th:block>
 	</div>
+	<ul th:each="fileEntity:*{fileEntities}" th:object="${fileEntities}">
+		<li><img src="*{fileEntity.base64_str}">
+	</ul>
 	<img th:src="${base64image}">
 	<div class="post-date">
 		投稿日時<br>
