@@ -17,10 +17,12 @@
 			<th:block th:text="${line}"></th:block>
 		</th:block>
 	</div>
-	<ul th:each="fileEntity:*{fileEntities}" th:object="${fileEntities}">
-		<li><img src="*{fileEntity.base64_str}">
+	<ul class="grid-image" >
+		<li th:each="fileEntity:*{fileEntities}" th:object="${fileEntity}">
+			<span th:if="${fileEntity.base64_str !=null}"><img th:src="${fileEntity.base64_str}"></span>
+		</li>
 	</ul>
-	<img th:src="${base64image}">
+	
 	<div class="post-date">
 		投稿日時<br>
 		<span th:text="*{postDateTime}">投稿日時</span>

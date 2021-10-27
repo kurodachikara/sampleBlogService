@@ -251,6 +251,19 @@ input[type="submit"]:hover{
 .contents{
 	padding: 20px;
 }
+.grid-image{
+	display: flex;
+	justify-content: space-around;
+}
+.grid-image img{
+	width: 200px;
+	height: 150px;
+}
+ul{
+	list-style-type: none;
+  	display: block;
+}
+
 /*　ブログタイトル　*/
 .blog-title{
 	font-family: "Yu Gothic Medium","游ゴシック Medium",YuGothic,"游ゴシック体","ヒラギノ角ゴ Pro W3",sans-serif;

@@ -18,24 +18,26 @@ public class UploadFileService {
 	private FileRepository fileRepository;
 	
 	public void saveFile(List<MultipartFile> mfiles,Blog blog) {
-		mfiles.forEach(file->{
-			FileEntity[] fileE=new FileEntity[mfiles.size()];
-			for(int i=0;i<mfiles.size();i++) {
-				fileE[i]=new FileEntity();
-			
-				fileE[i].setBlog(blog);
+		for(MultipartFile file:mfiles) {
+			if(!file.isEmpty()) {
+				FileEntity fileE=new FileEntity();
+				fileE=new FileEntity();
+				fileE.setBlog(blog);
 				try {
 					StringBuffer data = new StringBuffer();
 					String base64 = new String(Base64.encodeBase64(file.getBytes()),"ASCII");
 					data.append("data:image/jpeg;base64,");
 					data.append(base64);
-					fileE[i].setBase64_str(data.toString());
-					fileRepository.save(fileE[i]);
+					fileE.setBase64_str(data.toString());
+					fileRepository.save(fileE);
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
+			}else {
+				FileEntity fileE=new FileEntity();
+				fileE.setBlog(blog);
 			}
-			    
-		});
+		}
 	}
+	
 }
