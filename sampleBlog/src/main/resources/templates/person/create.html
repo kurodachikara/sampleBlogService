@@ -14,11 +14,11 @@ display:none; /*アップロードボタンの初期スタイルを無効化*/
 }
 label{
 	color: #fff; /* ラベルテキストの色を指定する */
-font-size: 13px; /* ラベルテキストのサイズを指定する */
-background-color: #006DD9;/* ラベルの背景色を指定する */
-padding: 6px; /* ラベルとテキスト間の余白を指定する */
-border-radius: 10px; /* ラベルボックスの角丸を指定する */
-cursor:pointer; /* マウスカーソルの形を指定する */}
+	font-size: 13px; /* ラベルテキストのサイズを指定する */
+	background-color: #006DD9;/* ラベルの背景色を指定する */
+	padding: 6px; /* ラベルとテキスト間の余白を指定する */
+	border-radius: 10px; /* ラベルボックスの角丸を指定する */
+	cursor:pointer; /* マウスカーソルの形を指定する */}
 label:hover{
 	background-color: #000000;
 }
@@ -48,15 +48,34 @@ label:hover{
 				</span>				
 			</li>
 		</ul>
-		
-		
 		<div>			
-			画像投稿<label class="choice-img" for="file_upload">
+			画像投稿<label class="choice-img" for="fileBox">
 				ファイルを選択してください
-				<input type="file" name="mfiles" multiple="multiple" id="file_upload" onchange="$('#fake_text_box').val($(this).val())">
-				<input type="text" id="file_upload" value="ファイル選択" onclick="$('#file').click();"><br>
+				<input type="file" name="mfiles" multiple="multiple" accept="image/*" id="fileBox" onchange="$('#msg').val($(this).val())">
+				<input type="text" id="fileBox" value="ファイル選択" onclick="$('#file').click();"><br>
 			</label>
-			<input class="img-text" type="text" id="fake_text_box" value="" size="100" readonly onClick="$('#file').click();">
+			<p class="img-text" id="msg"></p>
+			<script>
+function changeFile(){
+  let files = fileBox.files;
+  let filenames = "";
+
+  for(let i = 0 ; i < files.length ; i++){
+  	if (i > 0){
+      filenames += ', ';
+  	}
+
+    filenames += files[i].name;
+  }
+
+  msg.innerText = '選択しているファイルは ' + filenames ;
+}
+
+let fileBox = document.getElementById('fileBox');
+fileBox.addEventListener('change', changeFile);
+let msg = document.getElementById('msg');
+</script>
+			
 		</div>
 		
 		<table class="comment" border="1">
