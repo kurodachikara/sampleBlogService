@@ -66,10 +66,10 @@ public class BlogServiceTest {
 		blogService.deleteBlog(blog);
 		verify(blogRepository).deleteById(blog.getId());
 	}
-	@Test
+	/*@Test
 	public void testDeleteImage() {
 		Blog blog=new Blog();
 		blogService.deleteImage(blog);
 		verify(blogRepository).save(blog);
-	}
+	}*/
 }

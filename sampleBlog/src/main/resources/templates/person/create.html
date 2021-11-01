@@ -40,8 +40,15 @@ label:hover{
 			<textarea cols="100" rows="10" th:field="*{contents}"></textarea>
 			<span th:if="${#fields.hasErrors('contents')}" th:errors="*{contents}"></span>
 		</div>
-		<span><img th:src="${base64image}"></span>
-		<span th:if="${base64image !=null}"><a th:href="@{|/person/blog/*{id}/deleteimage|}">画像削除</a></span>
+		<ul class="grid-image">
+			<li th:each="fileEntity:*{fileEntities}" th:object="${fileEntity}">
+				<span th:if="${fileEntity.base64_str !=null}">
+					<img th:src="${fileEntity.base64_str}">
+					<a th:href="@{|/person/fileEntity/*{id}/deleteimage|}">画像削除</a>
+				</span>				
+			</li>
+		</ul>
+		
 		
 		<div>			
 			画像投稿<label class="choice-img" for="file_upload">

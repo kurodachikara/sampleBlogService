@@ -127,10 +127,11 @@ public class PersonController {
 	
 	//ブログ編集
 	@GetMapping("/blog/{blogId}/edit")
-	public String editBlog(@PathVariable("blogId")Blog blog,Model model) {
+	public String editBlog(@PathVariable("blogId")Blog blog,FileEntity file,Model model) {
+		List<FileEntity> fileEntities=blog.getFileEntities();
 		checkBlogOwner(blog,model);
 		
-		model.addAttribute("base64image",blog.getBase64_str());
+		model.addAttribute("fileEntities",fileEntities);
 		model.addAttribute("blog",blog);
 		return"person/create";
 	}
@@ -153,10 +154,12 @@ public class PersonController {
 		blogService.editBlog(blog);
 		return"redirect:/person/edit";
 	}
+	
+	//画像削除＠create.html
 	@Transactional
-	@GetMapping("/blog/{id}/deleteimage")
-	public String delete(@PathVariable("id")Blog blog,Model model) {
-		blogService.deleteImage(blog);
+	@GetMapping("/fileEntity/{id}/deleteimage")
+	public String delete(@PathVariable("id")FileEntity file,Blog blog,Model model) {
+		fileService.deleteImage(file);;
 		model.addAttribute("blog",blog);
 		return"redirect:/person/blog/"+blog.getId()+"/edit";
 	}

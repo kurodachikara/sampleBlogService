@@ -38,10 +38,4 @@ public class BlogService {
 	public void deleteBlog(Blog blog) {
 		blogRepository.deleteById(blog.getId());
 	}
-	public void deleteImage(Blog blog) {
-		blog.setFile(null);
-		blog.setImage_byte(null);
-		blog.setBase64_str(null);
-		blogRepository.save(blog);
-	}
 }
