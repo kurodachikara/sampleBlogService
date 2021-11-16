@@ -85,6 +85,7 @@ button:focus {
   box-shadow: 0 0 0 4px #cbd6ee;
 }
 input[type="text"],
+input[type="password"],
 textarea{
 	border: 1px solid;
 	border-radius: 5px;
@@ -117,6 +118,11 @@ input[type="submit"]:hover{
 	text-align: right;
 	background-color: #62420e;
 	color: #fff;
+}
+.list-button{
+	display: flex;
+	justify-content: flex-start;
+	margin-bottom: 30px;
 }
 
 /*記事検索機能*/
@@ -188,6 +194,8 @@ input[type="submit"]:hover{
 }
 
 .index{
+	width: 260px;
+	height: 215px;
 	border-style: groove;
 }
 
@@ -235,12 +243,25 @@ input[type="submit"]:hover{
 	font-size: 1.25rem;
 	border-style: inset;
 	padding: 1%;
-	width: 800px;
-	height: auto;
 	margin: 0 auto;
 }
+.posted-date{
+	font-size: 0.75rem;
+}
+.post{
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-end;
+	
+}
 .comment{
-	margin: 0 auto;
+	margin: 15px auto;
+}
+table, tr, th, td {
+  border: solid 1px;
+}
+table {
+  border-collapse: collapse;
 }
 .img-text{
 	margin-top: 20px;
@@ -278,15 +299,13 @@ ul{
 	border-bottom: dashed;
 	padding: 1.25rem;
 }
-.item{
-	border-bottom: solid;
-	border-color: tomato;
-	padding: 1%;
-}
 .item-text{
 	border-bottom: solid;
 	border-color: #d9d6d2;
 	padding: 1%;
+}
+.pro-blog{
+	border-bottom: 2px solid #0bd;
 }
 .pro-icon{
 	display: flex;

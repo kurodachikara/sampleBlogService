@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org/"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      layout:decorate="~{layout/common}">
+<head>
+<meta charset="UTF-8">
+<title>ブログ一覧</title>
+</head>
+<body>
+<div layout:fragment="content">
+	<form th:action="@{/account/createAdmin}" method="post">
+		管理者名：<input type="text" name="username"><br>
+		パス：<input type="password" name="password"><br>
+		<input type="submit" value="送信">
+	</form>
+
+</div>
+</body>
+</html>

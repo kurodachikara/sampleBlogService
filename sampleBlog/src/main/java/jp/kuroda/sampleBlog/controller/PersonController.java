@@ -207,6 +207,13 @@ public class PersonController {
 		return"redirect:/person/index";
 		}
 	}
+	
+	//アカウント削除
+	@GetMapping("/deleteUserAccount")
+	public String deleteUserAccount(UserAccount userAccount) {
+		userService.deleteUser(userAccount);
+		return"index";
+	}
 	@ResponseStatus(HttpStatus.FORBIDDEN)
 	private class ForbiddenPersonAccessException extends RuntimeException{
 		private static final long serialVersionUID=1L;

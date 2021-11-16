@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org/"
 	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/common}"
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
 <meta charset="UTF-8">
@@ -25,6 +26,15 @@ label:hover{
 </style>
 </head>
 <body>
+<div layout:fragment="content">
+	<div class="container">
+		<div>
+			<a class="tag" href="/person/create">新規ブログ作成</a>
+		</div>
+		<div>
+			<a class="tag" href="/person/edit">プロフィール編集</a>
+		</div>
+	</div>
 <a class="return" href="/person/index">ホームに戻る</a>
 	<form th:action="@{''}" method="post" th:object="${blog}" enctype="multipart/form-data">
 		<input type="hidden" th:field="*{id}">
@@ -78,7 +88,7 @@ let msg = document.getElementById('msg');
 			
 		</div>
 		
-		<table class="comment" border="1">
+		<table class="comment">
 		<tr>
 			<th>id</th>
 			<th>コメント</th>
@@ -104,5 +114,6 @@ let msg = document.getElementById('msg');
 		</div>
 	</div>
 	</form>
+</div>
 </body>
 </html>

@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
 	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      layout:decorate="~{layout/common}">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -9,9 +10,16 @@
 <title>パスワード変更</title>
 </head>
 <body>
-<p>
-	<a class="return" href="/person/index">一覧に戻る</a>
-</p>
+<div layout:fragment="content">
+	<div class="container">
+		<div>
+			<a class="tag" href="/person/create">新規ブログ作成</a>
+		</div>
+		<div>
+			<a class="tag" href="/person/edit">プロフィール編集</a>
+		</div>
+	</div>
+<p><a class="return" href="/person/index">一覧に戻る</a></p>
 <form th:action="@{|/person/*{username}/editPass|}" th:object="${userAccountForm}" method="post">
 	<div>
 		ユーザーID：
@@ -19,7 +27,7 @@
 	</div>
 	<div>
 		パスワード：
-		<input type="password" th:field="*{password}" ><br>
+		<input type="password" th:field="*{password}" ><br><br>
 		パスワード（確認用）：
 		<input type="password" name="passwordConfirm">
 		<span th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></span>
@@ -28,5 +36,6 @@
 		<button type="submit" value="変更">変更</button>
 	</div>
 </form>
+</div>
 </body>
 </html>

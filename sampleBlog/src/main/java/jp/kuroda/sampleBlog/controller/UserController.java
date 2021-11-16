@@ -63,10 +63,7 @@ public class UserController {
 	public String login() {
 		return"login";
 	}
-	@PostMapping("/login")
-	public String loginPost() {
-		return "redirect:/person/index";
-	}
+	
 	
 	@GetMapping("/createAccount")
 	public String createUserAccount(UserAccountForm userAccountForm) {

@@ -27,7 +27,7 @@
 		<ul class="main-nav">
 			<li sec:authorize="!isAuthenticated()"><a href="/login">ログイン</a></li>
 			<li sec:authorize="!isAuthenticated()"><a href="/createAccount">新規アカウント登録</a></li>
-			
+			<li sec:authorize="hasRole('ADMIN')"><a href="/account">アカウント管理</a>
 		</ul>
 	</nav>
 </div>

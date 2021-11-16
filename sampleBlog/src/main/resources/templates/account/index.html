@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org/"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      layout:decorate="~{layout/common}">
+<head>
+<meta charset="UTF-8">
+<title>ブログ一覧</title>
+</head>
+<body>
+<div layout:fragment="content">
+	<div th:object="${account}">
+		<a th:href="@{|/account/*{id}/edit|}">管理者情報編集</a>
+	</div>
+	<p><a href="/account/createAdmin">管理者作成</a></p>
+	ユーザーアカウント一覧
+	<ul>
+		<li th:each="userAccount:*{userAccounts}" th:object="${userAccount}">
+			<span th:text="*{username}"></span>
+			<a th:href="@{|/profile/*{person.id}|}"><span class="username" th:text="*{person.name}"></span></a>
+			<span th:if="${userAccount.username!=account.username}"><a th:href="@{|/account/delete/*{username}|}">アカウント削除</a></span>
+			
+		</li>
+	</ul>
+</div>
+</body>
+</html>

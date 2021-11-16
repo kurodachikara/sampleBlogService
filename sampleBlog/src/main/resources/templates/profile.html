@@ -11,9 +11,13 @@
 </head>
 <body>
 <div layout:fragment="content">
-	<p class="container-log">		
-		<span sec:authorize="isAuthenticated()"><a href="/person/index">一覧に戻る</a></span>
-		<span sec:authorize="!isAuthenticated()"><a href="/">一覧に戻る</a></span>
+	<p class="container">		
+		<span sec:authorize="isAuthenticated()">
+			<a class="tag" href="/person/index">一覧に戻る</a>
+			<a class="tag" href="/person/create">新規ブログ作成</a>
+			<a class="tag" href="/person/edit">プロフィール編集</a>
+		</span>
+		<span sec:authorize="!isAuthenticated()"><a class="tag" href="/">一覧に戻る</a></span>
 	</p>
 <div th:object="${person}">
 	<div class="pro-icon">
@@ -38,13 +42,13 @@
 	<div>
 		投稿記事
 		<ul sec:authorize="!isAuthenticated()">
-			<li class="item-text" th:each="blog:${person.blogs}" th:object="${blog}">
+			<li class="pro-blog" th:each="blog:${person.blogs}" th:object="${blog}">
 			<a th:href="@{|/blog/*{id}|}"><span th:text="*{title}"></span></a><br>
 			<span th:text="*{contents}"></span>
 			</li>
 		</ul>
 		<ul sec:authorize="isAuthenticated()">
-			<li class="item-text" th:each="blog:${person.blogs}" th:object="${blog}">
+			<li class="pro-blog" th:each="blog:${person.blogs}" th:object="${blog}">
 			<a th:href="@{|/person/blog/*{id}|}"><span th:text="*{title}"></span></a><br>
 			<span th:text="*{contents}"></span>
 			</li>

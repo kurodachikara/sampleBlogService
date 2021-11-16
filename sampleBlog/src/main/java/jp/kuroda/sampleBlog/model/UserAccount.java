@@ -1,5 +1,6 @@
 package jp.kuroda.sampleBlog.model;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -20,6 +21,8 @@ public class UserAccount {
 		
 	private String type;
 	
-	@OneToOne
+	@OneToOne(cascade = CascadeType.ALL)
 	private Person person;
+	@OneToOne(cascade=CascadeType.ALL)
+	private Account account;
 }

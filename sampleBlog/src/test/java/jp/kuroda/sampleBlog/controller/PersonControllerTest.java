@@ -6,12 +6,10 @@ import static org.springframework.security.test.web.servlet.request.SecurityMock
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.multipart;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.header;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
-import java.io.FileInputStream;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -83,12 +81,9 @@ public class PersonControllerTest {
 		blogMap=new HashMap<String,Blog>();
 		
 		blog=new Blog();
-		FileInputStream fis=new FileInputStream("images/picture.jpg");
-		MockMultipartFile mfile=new MockMultipartFile("images", fis);
 		blog.setTitle("Spring");
 		blog.setContents("a");
 		blog.setPerson(account.getPerson());
-		blog.setFile(mfile);
 		blogMap.put("1", blog);
 		
 		Blog blog2=new Blog();

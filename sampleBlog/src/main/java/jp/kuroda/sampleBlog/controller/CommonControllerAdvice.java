@@ -8,6 +8,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ModelAttribute;
 
+import jp.kuroda.sampleBlog.model.Account;
 import jp.kuroda.sampleBlog.model.UserAccount;
 import jp.kuroda.sampleBlog.service.UserService;
 
@@ -24,6 +25,18 @@ public class CommonControllerAdvice {
         if (principal instanceof UserDetails) {
             UserDetails userDetails = (UserDetails)auth.getPrincipal();
             return userService.find(userDetails.getUsername());
+        } else {
+            return null;
+        }
+    }
+	@ModelAttribute("account")
+	public Account currentAdminAccount() {
+        SecurityContext context = SecurityContextHolder.getContext();
+        Authentication auth = context.getAuthentication();
+        Object principal = auth.getPrincipal();
+        if (principal instanceof UserDetails) {
+            UserDetails userDetails = (UserDetails)auth.getPrincipal();
+            return userService.findAdmin(userDetails.getUsername());
         } else {
             return null;
         }

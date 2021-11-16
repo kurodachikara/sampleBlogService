@@ -21,7 +21,6 @@ public class UploadFileService {
 		for(MultipartFile file:mfiles) {
 			if(!file.isEmpty()) {
 				FileEntity fileE=new FileEntity();
-				fileE=new FileEntity();
 				fileE.setBlog(blog);
 				try {
 					StringBuffer data = new StringBuffer();
@@ -36,6 +35,7 @@ public class UploadFileService {
 			}else {
 				FileEntity fileE=new FileEntity();
 				fileE.setBlog(blog);
+				fileRepository.save(fileE);
 			}
 		}
 	}

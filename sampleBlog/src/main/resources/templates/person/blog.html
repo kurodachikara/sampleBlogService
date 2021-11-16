@@ -1,5 +1,7 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/common}">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -7,33 +9,35 @@
 <title th:text="${blog.title}">ブログタイトル</title>
 </head>
 <body>
-<p>
-	<a href="/person/index">一覧に戻る</a>
-</p>
+<div layout:fragment="content">
+	<div class="container">
+		<div>
+			<a class="tag" href="/person/create">新規ブログ作成</a>
+		</div>
+		<div>
+			<a class="tag" href="/person/edit">プロフィール編集</a>
+		</div>
+	</div>
+<a class="return" href="/person/index">ホームに戻る</a>
 <div class="create-blog" th:object="${blog}">
 	<h1 class="blog-title" th:text="*{title}"></h1>
-	<div class="posted_text">
-		<th:block th:each="line:*{contents.split('\n')}">
-			<th:block th:text="${line}"></th:block>
-		</th:block>
+	<div class="post">
+		<div class="posted_text">
+			<th:block th:each="line:*{contents.split('\n')}">
+				<th:block th:text="${line}"></th:block>
+			</th:block>
+		</div>
+		<div class="posted-date">
+			投稿日時<br>
+			<span th:text="*{postDateTime}">投稿日時</span>
+		
+		</div>	
 	</div>
 	<ul class="grid-image" >
 		<li th:each="fileEntity:*{fileEntities}" th:object="${fileEntity}">
 			<span th:if="${fileEntity.base64_str !=null}"><img th:src="${fileEntity.base64_str}"></span>
 		</li>
 	</ul>
-	
-	<div class="post-date">
-		投稿日時<br>
-		<span th:text="*{postDateTime}">投稿日時</span>
-	</div>
-	<form th:action="@{|/person/comment/blog/*{blog.id}|}" method="post" th:object="${comment}">
-		コメントする<br>
-		<input type="hidden" name="blog" th:value="*{blog.id}">
-		<input type="hidden" name="person" th:value="*{person.id}">
-		<textarea rows="5" cols="60" th:field="*{commenting}"></textarea>
-		<input type="submit">
-	</form>
 	<table class="comment" border="1">
 		<tr>
 			<th>id</th>
@@ -55,6 +59,16 @@
 			</span></td>
 		</tr>
 	</table>
+	
+	<form th:action="@{|/person/comment/blog/*{blog.id}|}" method="post" th:object="${comment}">
+		コメントする<br>
+		<input type="hidden" name="blog" th:value="*{blog.id}">
+		<input type="hidden" name="person" th:value="*{person.id}">
+		<textarea rows="5" cols="60" th:field="*{commenting}"></textarea>
+		<p><input type="submit"></p>
+	</form>
+	
+</div>
 </div>
 </body>
 </html>
