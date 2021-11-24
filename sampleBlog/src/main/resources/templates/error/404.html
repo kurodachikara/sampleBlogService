@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org/"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/common}"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link rel="stylesheet" href="/css/makeblog.css">
+<title>エラー</title>
+</head>
+<body>
+<div layout:fragment="content">
+	<p class="container">		
+		<span sec:authorize="isAuthenticated()">
+			<a class="tag" href="/person/index">一覧に戻る</a>
+			<a class="tag" href="/person/create">新規ブログ作成</a>
+			<a class="tag" href="/person/edit">プロフィール編集</a>
+		</span>
+		<span sec:authorize="!isAuthenticated()"><a class="tag" href="/">一覧に戻る</a></span>
+	</p>
+	<p>ご指定のURLは存在しません。</p>
+</div>
+</body>
+</html>
