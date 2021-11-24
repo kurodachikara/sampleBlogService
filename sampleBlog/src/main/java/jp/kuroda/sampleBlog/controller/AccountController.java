@@ -21,18 +21,14 @@ import jp.kuroda.sampleBlog.service.UserService;
 @RequestMapping("/account")
 @Controller
 public class AccountController {
-	@ModelAttribute("account")
-	public Account currentAccount(Account account) {
-		return new Account();
-	}
+	
 	@Autowired
 	private UserService userService;
 	
 	@GetMapping("")
-	public String index(Account account,Model model) {
+	public String index(Model model) {
 		List<UserAccount> userAccounts=userService.getAccountList();
 		model.addAttribute("userAccounts",userAccounts);
-		model.addAttribute("account",account);
 		return "account/index";
 	}
 	@GetMapping("/delete/{username}")

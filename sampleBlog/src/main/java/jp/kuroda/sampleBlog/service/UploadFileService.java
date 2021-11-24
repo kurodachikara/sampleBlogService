@@ -39,6 +39,7 @@ public class UploadFileService {
 			}
 		}
 	}
+	
 	public void deleteImage(FileEntity fileE) {
 		fileRepository.deleteById(fileE.getId());
 	}

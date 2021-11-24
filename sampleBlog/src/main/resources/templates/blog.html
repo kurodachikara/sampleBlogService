@@ -34,8 +34,8 @@
 		</div>	
 	</div>
 	<ul class="grid-image" >
-		<li th:each="fileEntity:*{fileEntities}" th:object="${fileEntity}">
-			<span th:if="${fileEntity.base64_str !=null}"><img th:src="${fileEntity.base64_str}"></span>
+		<li th:if="${fileEntity.base64_str !=null}" th:each="fileEntity:*{fileEntities}" th:object="${fileEntity}">
+			<img th:src="${fileEntity.base64_str}">
 		</li>
 	</ul>
 	<table class="comment" border="1">

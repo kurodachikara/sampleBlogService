@@ -11,6 +11,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 
 import jp.kuroda.sampleBlog.model.Person;
+import jp.kuroda.sampleBlog.repository.BlogRepository;
+import jp.kuroda.sampleBlog.repository.CommentRepository;
 import jp.kuroda.sampleBlog.repository.PersonRepository;
 
 @SpringJUnitConfig
@@ -27,6 +29,14 @@ public class PersonServiceTest {
 	
 	@MockBean
 	private PersonRepository personRepository;
+	@MockBean
+	private BlogService blogService;
+	@MockBean
+	private CommentService commentService;
+	@MockBean
+	private BlogRepository blogRepository;
+	@MockBean
+	private CommentRepository commentRepository;
 	
 	@Test
 	public void testCreatePerson() {
@@ -39,6 +49,14 @@ public class PersonServiceTest {
 	public void testUpdatePerson() {
 		Person person=new Person();
 		personService.updatePerson(person);
+		verify(personRepository).save(person);
+	}
+	@Test
+	public void testDeletePersonInfomation() {
+		Person person=new Person();
+		personService.deletePersonInfomation(person);
+		verify(blogRepository).deleteAll(blogService.getMyBlogs(person));
+		verify(commentRepository).deleteAll(commentService.getMyComment(person));
 		verify(personRepository).save(person);
 	}
 }

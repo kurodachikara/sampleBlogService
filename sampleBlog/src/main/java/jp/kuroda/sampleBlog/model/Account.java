@@ -4,6 +4,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 
 import lombok.Data;
 @Entity
@@ -15,4 +16,7 @@ public class Account {
 	
 	private String username;
 	private String password;
+	
+	@OneToOne(mappedBy = "account")
+	private UserAccount userAccount;
 }

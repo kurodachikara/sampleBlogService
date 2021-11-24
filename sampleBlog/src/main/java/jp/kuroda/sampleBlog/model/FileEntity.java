@@ -1,6 +1,5 @@
 package jp.kuroda.sampleBlog.model;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -24,6 +23,6 @@ public class FileEntity {
 	
 	private String base64_str;
 	
-	@ManyToOne(cascade=CascadeType.ALL)
+	@ManyToOne
 	private Blog blog;
 }

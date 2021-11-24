@@ -2,6 +2,7 @@ package jp.kuroda.sampleBlog.service;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,5 +29,8 @@ public class CommentService {
 	}
 	public void deleteComment(Comment comment) {
 		commentRepository.deleteById(comment.getId());
+	}
+	public List<Comment> getMyComment(Person person){
+		return commentRepository.findByPerson(person);
 	}
 }

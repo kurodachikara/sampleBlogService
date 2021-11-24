@@ -51,4 +51,10 @@ public class UploadFileServiceTest {
 		uploadFileService.saveFile(files,blog);
 		verify(fileRepository).save(file);
 	}
+	@Test
+	public void testDeleteImage() {
+		FileEntity fileEntity=new FileEntity();
+		uploadFileService.deleteImage(fileEntity);
+		verify(fileRepository).deleteById(fileEntity.getId());
+	}
 }

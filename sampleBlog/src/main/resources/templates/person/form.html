@@ -38,7 +38,7 @@ label:hover{
 	<form th:object="${userAccount}" method="get">
 		<a class="return" href="/person/index">ホームに戻る</a>
 		<a class="return" th:href="@{|/person/*{username}/editPass|}">パスワード編集</a>
-		<a class="return" th:href="@{/person/deleteUserAccount}">アカウント削除</a>
+		<a class="return" th:href="@{/person/deleteUserAccount}">アカウント情報削除</a>
 	</form>
 </div>
 

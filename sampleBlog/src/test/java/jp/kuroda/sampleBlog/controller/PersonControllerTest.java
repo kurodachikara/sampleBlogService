@@ -10,6 +10,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -28,16 +29,19 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import jp.kuroda.sampleBlog.model.Blog;
 import jp.kuroda.sampleBlog.model.Comment;
+import jp.kuroda.sampleBlog.model.FileEntity;
 import jp.kuroda.sampleBlog.model.Person;
 import jp.kuroda.sampleBlog.model.UserAccount;
 import jp.kuroda.sampleBlog.model.UserAccountForm;
 import jp.kuroda.sampleBlog.service.BlogService;
 import jp.kuroda.sampleBlog.service.CommentService;
 import jp.kuroda.sampleBlog.service.PersonService;
+import jp.kuroda.sampleBlog.service.UploadFileService;
 import jp.kuroda.sampleBlog.service.UserService;
 
 @WebMvcTest(PersonController.class)
@@ -55,6 +59,8 @@ public class PersonControllerTest {
 	@MockBean
 	private UserService userService;
 	@MockBean
+	private UploadFileService fileService;
+	@MockBean
 	private UserDetailsManager manager;
 	
 	private static UserAccount account;
@@ -62,7 +68,7 @@ public class PersonControllerTest {
 	private static Blog blog;
 	private static List<Blog> blogs;
 	private static Map<String, Comment> commentMap;
-	
+	private static FileEntity fileEntity;
 	@BeforeEach
 	public void setUp() throws Exception{
 		Person person1=new Person();
@@ -104,6 +110,14 @@ public class PersonControllerTest {
 		comment2.setCommenting("22");
 		commentMap.put("2", comment2);
 		
+		FileEntity fileEntity1=new FileEntity();
+		fileEntity1.setBlog(blog2);
+		
+		fileEntity=new FileEntity();
+
+		fileEntity.setBlog(blog);
+		fileEntity.setFile(new MockMultipartFile("file", "test.text","text/plain","Spring Framework".getBytes()));
+		
 	}
 	@TestConfiguration
 	static class Config implements WebMvcConfigurer{
@@ -115,6 +129,7 @@ public class PersonControllerTest {
 			registry.addConverter(String.class,UserAccount.class,id->account);
 			registry.addConverter(String.class,Person.class,id->account.getPerson());
 			registry.addConverter(String.class,Comment.class,id->commentMap.get(id));
+			registry.addConverter(String.class,FileEntity.class,id->fileEntity);
 		}
 	}
 	@Test
@@ -184,7 +199,7 @@ public class PersonControllerTest {
 	@WithMockUser(roles="USER")
 	public void testCreateBlogPostSuccess() throws Exception{
 		MultiValueMap<String, String> params=new LinkedMultiValueMap<>();
-		MockMultipartFile file=new MockMultipartFile("file", "test.txt", "text/plain", "Spring Framework".getBytes());
+		MockMultipartFile file=new MockMultipartFile("file", "test.txt","text/plain","Spring Framework".getBytes());
 		params.add("title", "Spring");
 		params.add("contents", "a");
 		mockMvc.perform(multipart("/person/create").file(file).with(csrf()).params(params))
@@ -203,8 +218,9 @@ public class PersonControllerTest {
 	@WithMockUser(roles="USER")
 	public void testEditBlogPostFail() throws Exception{
 		MultiValueMap<String, String> params=new LinkedMultiValueMap<>();
+		MockMultipartFile file=new MockMultipartFile("file", "test.txt","text/plain","Spring Framework".getBytes());
 		params.add("title", "");
-		mockMvc.perform(post("/person/blog/1/edit").with(csrf()).params(params))
+		mockMvc.perform(multipart("/person/blog/1/edit").file(file).with(csrf()).params(params))
 				.andExpect(view().name("person/create"))
 				.andExpect(model().hasErrors());
 	}
@@ -221,7 +237,7 @@ public class PersonControllerTest {
 	@Test
 	@WithMockUser(roles="USER")
 	public void testDeleteGet() throws Exception{
-		mockMvc.perform(get("/person/blog/1/deleteimage"))
+		mockMvc.perform(get("/person/fileEntity/1/deleteimage"))
 				.andExpect(status().isFound());
 	}
 	@Test
@@ -288,5 +304,11 @@ public class PersonControllerTest {
 		mockMvc.perform(post("/person/hiroshi/editPass").with(csrf()).params(params))
 				.andExpect(view().name("person/editPass"))
 				.andExpect(model().hasErrors());
+	}
+	@Test
+	@WithMockUser(roles="USER")
+	public void testDeletePersonInfo() throws Exception {
+		mockMvc.perform(get("/person/fileEntity/1/deleteimage"))
+		.andExpect(status().isFound());
 	}
 }

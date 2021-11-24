@@ -95,13 +95,16 @@ public class UserService {
 		Account account=new Account();
 		account.setUsername(username);
 		account.setPassword(passwordEncoder.encode(password));
-		adminRepository.save(account);
+		
 		Person person=personService.createPerson();
 		UserAccount userAccount=new UserAccount();
 		userAccount.setUsername(username);
 		userAccount.setPassword(passwordEncoder.encode(password));
 		userAccount.setPerson(person);
 		userAccount.setAccount(account);
+		userAccount.setType("admin");
+		account.setUserAccount(userAccount);
+		adminRepository.save(account);
 		accountRepository.save(userAccount);
 		return account;
 	}

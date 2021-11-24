@@ -110,15 +110,14 @@ public class PersonController {
 		if(bindingResult.hasErrors()) {
 			return "person/create";
 		}
-		fileService.saveFile(mfiles, blog);
 		blogService.createBlog(blog);
+		fileService.saveFile(mfiles, blog);
 		return"redirect:/person/blog/"+blog.getId();
 	}
 	//ブログ閲覧
 	@GetMapping("/blog/{blogId}")
 	public String showBlog(@PathVariable("blogId") Blog blog,Person person,FileEntity fileEntity,Model model){
-	    List<FileEntity> fileEntities=blog.getFileEntities();
-		model.addAttribute("fileEntities",fileEntities);
+	    
 		model.addAttribute("blog",blog);
 		Comment comment=commentService.getComment(blog,person);
 		model.addAttribute("comment",comment);
@@ -128,40 +127,28 @@ public class PersonController {
 	//ブログ編集
 	@GetMapping("/blog/{blogId}/edit")
 	public String editBlog(@PathVariable("blogId")Blog blog,FileEntity file,Model model) {
-		List<FileEntity> fileEntities=blog.getFileEntities();
 		checkBlogOwner(blog,model);
 		
-		model.addAttribute("fileEntities",fileEntities);
 		model.addAttribute("blog",blog);
 		return"person/create";
 	}
 	@PostMapping("/blog/{blogId}/edit")
-	public String editBlog(@Valid Blog blog,BindingResult bindingResult) {
+	public String editBlog(@RequestParam("mfiles")List<MultipartFile> mfiles,@Valid Blog blog,BindingResult bindingResult,Model model) {
 		if(bindingResult.hasErrors()) {
 			return"person/create";
 		}
-		if(!blog.getFile().isEmpty()) {
-			try {
-				MultipartFile file=blog.getFile();
-				StringBuffer data = new StringBuffer();
-			    String base64 = new String(Base64.encodeBase64(file.getBytes()),"ASCII"); //画像をbase64に置き換えて文字列化
-			    data.append("data:image/jpeg;base64,");
-			    data.append(base64);
-			    blog.setBase64_str(data.toString());
-			}catch(Exception e) {
-			}
-		}
 		blogService.editBlog(blog);
+		fileService.saveFile(mfiles, blog);
+		model.addAttribute("blog", blog);
 		return"redirect:/person/edit";
 	}
 	
 	//画像削除＠create.html
 	@Transactional
 	@GetMapping("/fileEntity/{id}/deleteimage")
-	public String delete(@PathVariable("id")FileEntity file,Blog blog,Model model) {
+	public String delete(@PathVariable("id")FileEntity file) {
 		fileService.deleteImage(file);;
-		model.addAttribute("blog",blog);
-		return"redirect:/person/blog/"+blog.getId()+"/edit";
+		return"redirect:/person/blog/"+file.getBlog().getId()+"/edit";
 	}
 	
 	//ブログ削除
@@ -210,9 +197,9 @@ public class PersonController {
 	
 	//アカウント削除
 	@GetMapping("/deleteUserAccount")
-	public String deleteUserAccount(UserAccount userAccount) {
-		userService.deleteUser(userAccount);
-		return"index";
+	public String deletePersonInfo(Person person) {
+		personService.deletePersonInfomation(person);
+		return"redirect:/person/index";
 	}
 	@ResponseStatus(HttpStatus.FORBIDDEN)
 	private class ForbiddenPersonAccessException extends RuntimeException{
